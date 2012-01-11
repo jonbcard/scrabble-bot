@@ -28,8 +28,13 @@ System.in.withReader {
             //logger.info("Getting next move.")
             def bestPlay = r.buildPlays()
             if(bestPlay == null){ 
-                def tileString = r.tiles.join(" ")
-                println "EXCHANGE: $tileString"
+                // Nothing to play -- skip or exchange
+                if(r.tiles.size()<7){
+                    println "SKIP"
+                } else {
+                    def tileString = r.tiles.join(" ")
+                    println "EXCHANGE: $tileString"
+                }
             } else {
                 println bestPlay.playString()
                 //logger.info("Played move: $bestPlay")
