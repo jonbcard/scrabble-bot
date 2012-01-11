@@ -1,0 +1,4 @@
+INFO  org.codehaus.groovy.runtime.callsite.CallSiteArray (CallSiteArray.java [defaultCall]:42) - Setting up board
+INFO  org.codehaus.groovy.runtime.callsite.CallSiteArray (CallSiteArray.java [defaultCall]:42) - Setting up board
+INFO  org.card.scrabble.Board (Board.groovy [<init>]:16) - Setting up board
+INFO  org.card.scrabble.Board (Board.groovy [<init>]:16) - Setting up board

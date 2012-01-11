@@ -1,16 +1,19 @@
 package org.card.scrabble
 
+//import org.apache.log4j.Logger
+
 class Board {
+    //def logger = Logger.getLogger("BOARD")
     /** Pattern to test which way a play is going. */
     def letterScores = [:]
     def dirPattern = ~/^[0-9]+[A-z]/
     def alphaMap = [:]
-    def firstMove = true
     
     def rows = [][]
     def cols = [][]
     
     Board(){
+        //logger.info('Setting up board')
         // Setup Alpa-map
         ('A'..'O').eachWithIndex{ it, i -> 
             alphaMap[it] = i  
@@ -97,9 +100,11 @@ class Board {
      * be parsed, then applied to the board.
      */
     def playMove(play){
-        if(firstMove) firstMove = false
         
         def (_, player, pos, word, points) = play.split()
+        
+        word = word.replaceAll("\\(","").replaceAll("\\)","").toUpperCase()
+        
         def c = getDirectionAndCoords(pos)
         
         // first, add the word...

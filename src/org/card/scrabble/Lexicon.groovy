@@ -81,6 +81,7 @@ class Lexicon {
     
     def wordIsValid(rules, illegalLengths, hardLimit, tiles, word){
         def isMatch = true
+        def newWordCreated = false
         def play = ""
         int wildcards = tiles.count("*")
         def copy = ([] + tiles).flatten();
@@ -114,6 +115,7 @@ class Lexicon {
                 // play a tile, if we can
                 if(!copy.remove(letter)) {
                     if(wildcards > 0) {
+                        newWordCreated = true
                         play += letter.toLowerCase()
                         wildcards--
                     } else {
@@ -121,11 +123,12 @@ class Lexicon {
                         break
                     }
                 } else {
+                    newWordCreated = true
                     play += letter
                 }
             }
         }
-        return isMatch ? play : null
+        return isMatch && newWordCreated ? play : null
     }
     
     /** 

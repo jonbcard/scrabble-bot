@@ -87,7 +87,7 @@ assert b.rows[7][7].getLeftSpace() == 7
 assert b.rows[7][11].getLeftSpace() == 0
 assert b.rows[7][12].getLeftSpace() == 0
 assert b.rows[7][13].getLeftSpace() == 1
-//assert b.rows[3][12].getLeftSpace() == 6
+assert b.rows[3][12].getLeftSpace() == 6
 
 assert b.rows[1][1].getTopSpace() == 0
 assert b.rows[7][9].getTopSpace() == 7
@@ -126,3 +126,11 @@ b.playMove("PLAY: 0 H1 FUNK 48")
 b.playMove("PLAY: 1 D10 LUBE 26")
 b.playMove("PLAY: 0 5C CRAGGY 37")
 assert b.rows[10][5].columnAddons == ['S']
+
+b = new Board()
+r = new Rack(b)
+b.playMove("PLAY: 0 8H DECAY 26")
+b.playMove("PLAY: 1 H8 (D)OUZEPER 113")
+r.applyRack("TILES: R E Y H I X K")
+bestPlay = r.buildPlays()
+assert bestPlay.playString() == "I7 K(E)X"

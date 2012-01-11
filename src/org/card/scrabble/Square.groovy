@@ -224,11 +224,14 @@ class Square {
     }
     
     def getLeftSpace(){
+        def tilesRequired = (value == null) ? 1 : 0
+        
         def pos = colPos
         def i=0
         while(--pos >= 0 && board.rows[rowPos][pos].value == null && board.rows[rowPos][pos].rowAddons == null){
             // make sure this isn't joining on to another word before counting this as a space
             if(pos==0 || board.rows[rowPos][pos-1].value == null) i++
+            if(++tilesRequired == 7) return i // early out when tile count is exceeded
         }
         return i
     }
@@ -249,11 +252,13 @@ class Square {
     }
     
     def getTopSpace(){
+        def tilesRequired = (value == null) ? 1 : 0
         def pos = rowPos
         def i=0
         while(--pos >= 0 && board.cols[colPos][pos].value == null && board.cols[colPos][pos].columnAddons == null){
             // make sure this isn't joining on to another word before counting this as a space
             if(pos==0 || board.cols[colPos][pos-1].value == null) i++
+            if(++tilesRequired == 7) return i // early out when tile count is exceeded
         }
         return i
     }
