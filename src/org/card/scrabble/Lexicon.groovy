@@ -56,6 +56,9 @@ class Lexicon {
      * Get a starting word set for match evaluation.
      */
     def getStartingSet(position, letters){
+        // early-out for the starting turn case
+        if (letters == ('A'..'Z')) return words
+        
         def startingWordSet = []
         ([]+letters).each{
             startingWordSet.addAll(wordsByLetter[it][position])
@@ -85,9 +88,11 @@ class Lexicon {
         
         // TODO : re-write to break early
         if(word.length() > hardLimit || illegalLengths.contains(word.length())) isMatch = false
-      
-            
-        word.toList().eachWithIndex{ letter, i -> 
+        
+        def wordArr = word.toList()
+        for(int i=0;i<wordArr.size();i++){
+            def letter = wordArr[i]
+        
             def valid = rules[i]
             def newTile = true    
             
@@ -96,11 +101,13 @@ class Lexicon {
                 newTile = false
                 if(valid != letter){
                     isMatch = false
+                    break
                 } else {
                     play += "($letter)"
                 }
             } else if(valid != null && !valid.contains(letter)) {
                 isMatch = false
+                break
             } 
             
             if(newTile && isMatch){
@@ -111,6 +118,7 @@ class Lexicon {
                         wildcards--
                     } else {
                         isMatch = false
+                        break
                     }
                 } else {
                     play += letter
