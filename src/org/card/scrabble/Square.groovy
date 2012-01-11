@@ -39,20 +39,16 @@ class Square {
     }
     
     def getBlankAdjacent(){
-        //println "Getting adjacent for ($rowPos, $colPos)"
         def adj = [];
-        if(rowPos > 0 && board.rows[rowPos - 1][colPos].value == null){
-            adj << board.rows[rowPos - 1][colPos]
-        }
-        if(rowPos < 14 && board.rows[rowPos + 1][colPos].value == null){
-            adj << board.rows[rowPos + 1][colPos]
-        }
-        if(colPos > 0 && board.cols[colPos - 1][rowPos].value == null){
-            adj << board.cols[colPos - 1][rowPos]
-        }
-        if(colPos < 14 && board.cols[colPos + 1][rowPos].value == null){
-             adj << board.cols[colPos + 1][rowPos]
-        }
+        def blank = getNextBlankAbove()
+        if(blank != null) adj << blank
+        blank = getNextBlankBelow()
+        if(blank != null) adj << blank
+        blank = getNextBlankToLeft()
+        if(blank != null) adj << blank
+        blank = getNextBlankToRight()
+        if(blank != null) adj << blank
+        
         return adj
     }
     
@@ -108,6 +104,15 @@ class Square {
         return rules
     }
     
+    def getNextBlankAbove(){
+        for(int i=rowPos-1; i>=0; i--){
+            if(board.rows[i][colPos].value == null){
+                return board.rows[i][colPos]
+            }
+        }
+        return null
+    }
+    
     def getLettersAbove(){
         def topWord = ""
         def pos = rowPos-1
@@ -116,6 +121,15 @@ class Square {
             pos--
         }
         return topWord
+    }
+    
+    def getNextBlankBelow(){
+        for(int i=rowPos+1; i<=14; i++){
+            if(board.rows[i][colPos].value == null){
+                return board.rows[i][colPos]
+            }
+        }
+        return null
     }
     
     def getLettersBelow(){
@@ -128,6 +142,15 @@ class Square {
         return bottomWord
     }
     
+    def getNextBlankToLeft(){
+        for(int i=colPos-1; i>=0; i--){
+            if(board.cols[i][rowPos].value == null){
+                return board.cols[i][rowPos]
+            }
+        }
+        return null
+    }
+    
     def getLettersToLeft(){
         def leftWord = ""
         def pos = colPos-1
@@ -136,6 +159,15 @@ class Square {
             pos--
         }
         return leftWord
+    }
+    
+    def getNextBlankToRight(){
+        for(int i=colPos+1; i<=14; i++){
+            if(board.cols[i][rowPos].value == null){
+                return board.cols[i][rowPos]
+            }
+        }
+        return null
     }
     
     def getLettersToRight(){
