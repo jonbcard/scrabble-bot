@@ -1,7 +1,5 @@
 package org.card.scrabble
 
-import org.apache.log4j.Logger
-
 Board b = new Board()
 Rack  r = new Rack(b)
 
