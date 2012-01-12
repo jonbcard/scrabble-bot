@@ -103,7 +103,7 @@ class Board {
         
         def (_, player, pos, word, points) = play.split()
         
-        word = word.replaceAll("\\(","").replaceAll("\\)","").toUpperCase()
+        word = word.replaceAll("\\(","").replaceAll("\\)","")
         
         def c = getDirectionAndCoords(pos)
         

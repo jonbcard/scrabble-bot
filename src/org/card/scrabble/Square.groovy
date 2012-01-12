@@ -194,9 +194,7 @@ class Square {
         def bottomWord = getLettersBelow()
         
         if(topWord.length() > 0 && bottomWord.length() > 0){
-            // TODO: rare but acceptable case that should be handled. For now
-            // we'll assume that nothing can be played here.
-            rowAddons = []
+            rowAddons = Lexicon.getInstance().validSingleChar(topWord, bottomWord)
         } else if(topWord.length() > 0){
             rowAddons = Lexicon.getInstance().validSuffixes(topWord)
         } else if (bottomWord.length() > 0){
@@ -210,9 +208,7 @@ class Square {
         def rightWord = getLettersToRight()
         
         if(leftWord.length() > 0 && rightWord.length() > 0){
-            // TODO: rare but acceptable case that should be handled. For now
-            // we'll assume that nothing can be played here.
-            columnAddons = []
+            columnAddons = Lexicon.getInstance().validSingleChar(leftWord, rightWord)
         } else if(leftWord.length() > 0){
             columnAddons = Lexicon.getInstance().validSuffixes(leftWord)
         } else if (rightWord.length() > 0){

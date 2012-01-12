@@ -61,7 +61,7 @@ class Lexicon {
         
         def startingWordSet = []
         ([]+letters).each{
-            startingWordSet.addAll(wordsByLetter[it][position])
+            startingWordSet.addAll(wordsByLetter[it.toUpperCase()][position])
         }
         return startingWordSet
     }
@@ -100,11 +100,11 @@ class Lexicon {
             // handle cases where there are constraints on thre current letter
             if(valid != null && valid instanceof String){
                 newTile = false
-                if(valid != letter){
+                if(valid.toUpperCase() != letter){
                     isMatch = false
                     break
                 } else {
-                    play += "($letter)"
+                    play += "($valid)"
                 }
             } else if(valid != null && !valid.contains(letter)) {
                 isMatch = false
@@ -136,8 +136,11 @@ class Lexicon {
      * letters that can be prefixed to a given ending.
      */
     def validPrefixes(end){
-        def result = words.findAll{ 
-            it.substring(1).equals(end)
+        end = end.toUpperCase()
+        def lastLetter = end.getAt(end.length()-1)
+        def len = end.length() + 1
+        def result = wordsByLetter[lastLetter.toUpperCase()][end.length()].findAll{ 
+            it.length() == len && it.substring(1).equals(end)
         }.collect{
             it.getAt(0)
         };
@@ -149,11 +152,26 @@ class Lexicon {
      * letters that can be suffixed to a given start.
      */
     def validSuffixes(start){
+        start = start.toUpperCase()
+        def firstLetter = start.getAt(0)
         def len = start.length() + 1
-        def result = words.findAll{ 
+        def result = wordsByLetter[firstLetter][0].findAll{ 
             it.length() == len && it.startsWith(start)
         }.collect{
             it.getAt(it.length()-1)
+        };
+        return result
+    }
+    
+    def validSingleChar(prefix, suffix){
+        prefix = prefix.toUpperCase()
+        suffix = suffix.toUpperCase()
+        def len = prefix.length() + suffix.length() + 1
+        def firstLetter = prefix.getAt(0)
+        def result = wordsByLetter[firstLetter][0].findAll{ 
+            it.length() == len && it.startsWith(prefix) && it.endsWith(suffix)
+        }.collect{
+            it.getAt(prefix.length())
         };
         return result
     }
